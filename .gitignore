@@ -1,0 +1,54 @@
+# Arquivos de configuração
+*.settings
+*.pyc
+*.pyo
+
+# Arquivos de migração do Django
+/migrations/
+
+# Arquivos de banco de dados SQLite
+*.sqlite3
+
+# Diretório de arquivos de mídia
+/media/
+
+# Diretório de arquivos estáticos
+/static/
+
+# Arquivos de ambiente local
+.env
+
+# Diretório do ambiente virtual
+/venv/
+
+# Diretório de log
+/log/
+
+# Arquivos de cache
+__pycache__/
+
+# Arquivos de inicialização do IDE
+.idea/
+
+# Arquivos de logs do sistema
+*.log
+
+# Dependências
+__pycache__/
+*.pyc
+*.pyo
+
+# Arquivos de configuração do sistema
+.DS_Store
+
+# Arquivos de cache do sistema
+Thumbs.db
+
+# Dependências Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Outros arquivos temporários ou específicos do sistema
+*.swp
+.DS_Store

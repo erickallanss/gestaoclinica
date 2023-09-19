@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center">Descrição da Consulta</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nome_paciente" class="form-label">Nome do Paciente</label>
+                        <input type="text" name="nome_paciente" class="form-control" id="nome_paciente" disabled>
+                    </div>
+                    <!-- Outros campos preenchidos automaticamente -->
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição da Consulta</label>
+                        <textarea name="descricao" class="form-control" id="descricao"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirmar Informações</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

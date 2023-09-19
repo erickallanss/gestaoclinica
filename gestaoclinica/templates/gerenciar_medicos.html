@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="tablepacientes" style="width: 95%">
+    <div class="row">
+        <div class="col-md-9">
+            <h2 style="text-align: center;">Gerenciar Médicos</h2>
+            <div class="divfiltro"><strong>Filtro dinâmico:</strong>
+                <input type="text" id="filtro-medicos" class="form-control filtro"
+                    placeholder="Insira aqui algum dado a ser filtrado" />
+            </div>
+            <center>
+            <div class="addmedico btn btn-novomedico"><a class="linkbutton" href="{% url 'novo_medico' %}">Registrar novo médico</a></div>
+            </center>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">CRM</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for medico in medicos %}
+                        <tr>
+                            <td>{{ medico.nome }}</td>
+                            <td>{{ medico.crm }}</td>
+                            <td>
+                                <a href="{% url 'editar_medico' medico.id %}" class="btn btn-editar btn-sm">Editar</a>
+                                <a class="btn btn-excluir btn-sm" href="{% url 'excluir_medico' medico.id %}" onclick="return confirm('Tem certeza de que deseja excluir o médico {{ medico.nome }}?')">Excluir</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .divfiltro {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+        background-color: transparent;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody+tbody {
+        border-top: 2px solid #dee2e6;
+    }
+
+    .table-sm th,
+    .table-sm td {
+        padding: 0.3rem;
+    }
+
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #dee2e6;
+    }
+
+    .table-bordered thead th,
+    .table-bordered thead td {
+        border-bottom-width: 2px;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+
+    .filtro {
+        width: 100%;
+        height: 30px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        padding: 5px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        margin-left: 10px;
+    }
+
+    .btn {
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #FFF;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-editar {
+        background-color:#696969;
+    }
+
+    .btn-editar:hover {
+        background-color:#494949;
+    }
+
+    .btn-excluir {
+        background-color:#DD0000;
+    }
+
+    .btn-excluir:hover {
+        background-color:#8f0000;
+    }
+
+    .addmedico {
+        margin-bottom: 20px;
+    }
+
+    .btn-novomedico {
+        padding: 12px 18px;
+        width: 200px;
+        background-color:#028214;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-novomedico:hover {
+        background-color: #00580c;
+    }
+
+    .linkbutton {
+        text-decoration: none;
+        color: #FFF;
+    }
+
+</style>
+<script>
+    const filtroInput = document.getElementById('filtro-medicos');
+    const medicos = document.querySelectorAll('tbody tr');
+
+    filtroInput.addEventListener('input', function () {
+        const filtroValor = filtroInput.value.toLowerCase();
+
+        medicos.forEach(medico => {
+            let medicoEncontrado = false;
+            medico.querySelectorAll('td').forEach(dado => {
+                if (dado.textContent.toLowerCase().includes(filtroValor)) {
+                    medicoEncontrado = true;
+                }
+            });
+            if (medicoEncontrado) {
+                medico.style.display = 'table-row';
+            } else {
+                medico.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

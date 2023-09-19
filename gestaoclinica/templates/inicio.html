@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    * {
+        list-style-type: none;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        list-style-type: none;
+    }
+
+    .dashboard {
+        background-color: #fff;
+        min-height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .divheader {
+        background-color: #D0D0D0;
+        color: #000;
+        width: calc(95% - 40px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .divheader select {
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    #medicoForm {
+        margin-bottom: 20px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #medicoForm label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    #medicoForm select {
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .listasconsultas {
+        display: flex;
+        width: 95%;
+        min-height: 100%;
+    }
+
+    .listaconsultas {
+        background-color: #D0D0D0;
+        flex: 1;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .listaconsultas:first-child {
+        margin-right: 20px;
+    }
+
+    .list-group-item {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background-color: #f5f5f5;
+    }
+
+    .btn-primary {
+        background-color: #028214;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background-color: #00580c;
+    }
+
+    .btn-danger {
+        background-color: #DD0000;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-danger:hover {
+        background-color: #8f0000;
+    }
+
+    .btn-abrirprontuario {
+        text-decoration: none;
+        background-color: #73847B;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        font-size: 0.8rem;
+    }
+
+    .btn-abrirprontuario:hover {
+        background-color: #34403a;
+    }
+
+    .btn-preencherprontuario {
+        text-decoration: none;
+        background-color: #039519;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        font-size: 0.8rem;
+    }
+
+    .btn-preencherprontuario:hover {
+        background-color: #00560D;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .botoesdaconsulta {
+        margin-top: 10px;
+        display: flex;
+        flex: 1;
+        gap: 5px;
+    
+        @media(max-width: 1024px) {
+            flex-direction: column;
+            flex: 1;
+            margin-top: 5px;
+        }
+    }
+
+</style>
+<div class='dashboard'>
+    <div class="divheader">
+        <h3 class="text-center">Mostrando agenda de:</h3>
+        <form method="get" id="medicoForm">
+            <select name="medico" id="medico" class="form-control">
+                <option value="">Todos os médicos</option>
+                {% for medico in medicos %}
+                    <option value="{{ medico.id }}" {% if medico_id_selecionado == medico.id %}selected{% endif %}>{{ medico.nome }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <h3 style="margin-left: 20px">para {{ selected_date|date:"d/m/Y" }}</h3>
+    </div>
+    <div class="listasconsultas">
+        <div class="listaconsultas">
+            <h3 class="list-group-item text-center">Pacientes agendados</h3>
+            {% if appointments %}
+            <ul class="list-group mt-3">
+                {% for appointment in appointments %}
+                    {% if not appointment.compareceu %}
+                    <li class="list-group-item consulta-item">
+                        <div class="consulta-info">
+                            <p style="margin-bottom: 5px"><strong>Paciente: </strong> {{ appointment.paciente.nome }}</p>
+                            <p><strong>Médico: </strong> {{ appointment.medico.nome }}</p>
+                        </div>
+                        <form method="POST" action="{% url 'marcar_compareceu' appointment.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10px">Confirmar consulta</button>
+                        </form>
+                    </li>
+                    {% endif %}
+                {% empty %}
+                    <li class="list-group-item text-center list-group-item">Nenhuma consulta agendada.</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="no-consultas text-center list-group-item">Nenhuma consulta agendada.</p>
+            {% endif %}
+        </div>
+        <div class="listaconsultas">
+            <h3 class="list-group-item text-center">Pacientes confirmados</h3>
+            {% if pacientes_compareceram %}
+            <ul class="list-group mt-3">
+                {% for consulta in pacientes_compareceram %}
+                    <li class="list-group-item consulta-item consulta-info">
+                        <p><strong>{{ consulta.ordem_comparecimento }}</strong> - {{ consulta.paciente.nome }}</p>
+                        <form method="POST" action="{% url 'marcar_compareceu' consulta.id %}" class="botoesdaconsulta">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="flex: 1;">Cancelar confirmação</button>
+                            <a href="{% url 'prontuario_paciente' consulta.paciente.id %}" class="btn btn-abrirprontuario" style="flex: 1;">Ver prontuário</a>
+                            <a href="{% url 'editar_descricao_consulta' consulta.id %}" class="btn btn-preencherprontuario" style="flex: 1;">Preencher prontuário</a>
+                        </form>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-center list-group-item">Nenhuma consulta confirmada.</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="no-consultas text-center list-group-item">Nenhuma consulta confirmada.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    // Obtém o select de médico
+    const medicoSelect = document.getElementById('medico');
+
+    // Adiciona um ouvinte de evento para detectar a mudança de seleção
+    medicoSelect.addEventListener('change', function () {
+        // Obtém o valor selecionado (ID do médico)
+        const selectedMedicoId = medicoSelect.value;
+
+        // Redireciona a página com o ID do médico como parâmetro de consulta
+        if (selectedMedicoId) {
+            window.location.href = `/${selectedMedicoId}/`;
+        } else {
+            // Se "Todos os médicos" for selecionado, redireciona para a página inicial sem parâmetros
+            window.location.href = '/';
+        }
+    });
+</script>
+{% endblock %}

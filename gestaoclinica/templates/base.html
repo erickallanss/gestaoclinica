@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Sistema de Consultas</title>
+    <style>
+      :root {
+        --main-bg-color: #255c99;
+        --sec-bg-color: #7ea3cc;
+      }
+
+        body {
+          background-color: #FFF;
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+        }
+    
+        .sidebar {
+          height: calc(100vh - 40px);
+          width: calc(300px - 40px);
+          background-color: var(--main-bg-color);
+          color: #FFFFFF;
+          padding: 20px;
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+          position: fixed;
+        }
+    
+        .sidebar-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 60px;
+        }
+    
+        .sidebar-username {
+          font-weight: bold;
+          text-align: end;
+          position: absolute;
+        }
+    
+        .username {
+          background-color: var(--sec-bg-color);
+          padding: 10px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+    
+        .sidebar-menu {
+          flex-grow: 1;
+          padding: 0;
+          list-style-type: none;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          width: 100%;
+        }
+    
+        .sidebar-menu-item {
+          display: block;
+          padding: 10px;
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+          color: #FFFFFF;
+          text-decoration: none;
+          text-align: start;
+          font-weight: 800;
+          width: 260px;
+        }
+        .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .item-menu-group:hover,
+        .item-menu-group.active {
+          background-color: var(--sec-bg-color);
+        }
+    
+        .logout-button {
+          padding: 10px;
+          text-decoration: none;
+          color: #FFFFFF;
+          border: none;
+          border-radius: 4px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          width: 100%;
+          text-align: center;
+        }
+    
+        .logout-button:hover {
+          background-color: var(--sec-bg-color);
+        }
+    
+        .content {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          margin-left: 300px;
+        }
+    
+        .line {
+          width: 100%;
+          background-color: #fff;
+          opacity: 0.2;
+          border: none;
+          height: 1px;
+        }
+    
+        .logout-button-div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+    
+        .subtitle {
+          margin-top: 10px;
+          text-align: center;
+          font-size: 1rem
+        }
+    
+        .table, ul, li, td {
+          text-align: center;
+          vertical-align: middle;
+          margin: 0;
+          padding: 0;
+        }
+    
+        .item-menu-group {
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+          color: #FFFFFF;
+          text-decoration: none;
+          font-weight: 800;
+          width: 260px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .icone {
+          margin-left: 30px;
+          
+        }
+
+      </style>
+      {% load static %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+      <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+      <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    {% load static %}
+    <div class="sidebar">
+      <div class="sidebar-username username">
+        <i class="fa-solid fa-image-portrait fa-lg icone" style='margin-left: 10px'></i>
+        <span class="username">Olá, {{ username }}</span>
+      </div>
+      <div class="sidebar-header">
+        <div class="title">Clínica Potengi</div>
+        <div class="subtitle">Módulo de gerenciamento</div>
+      </div>
+      <div>
+        <ul class="sidebar-menu">
+          <hr class="line" />
+          <li class='item-menu-group {% if active == 'inicio' %}active{% endif %}'>
+            <i class="fa-solid fa-house fa-lg icone"></i>
+            <a href="/" class="sidebar-menu-item">Início</a></li>
+          <hr class="line" />
+          <li class='item-menu-group {% if active == 'gerenciarpacientes' %}active{% endif %}'>
+            <i class="fa-solid fa-users fa-lg icone"></i>
+            <a href="/gerenciarpacientes" class="sidebar-menu-item">Gerenciar Pacientes</a></li>
+          <hr class="line" />
+          <li class='item-menu-group {% if active == 'gerenciarconsultas' %}active{% endif %}'>
+            <i class="fa-solid fa-calendar-days fa-lg icone"></i>
+            <a href="/gerenciarconsultas" class="sidebar-menu-item">Gerenciar Consultas</a>
+          </li>
+          <hr class="line" />
+          <li class='item-menu-group {% if active == 'gerenciarmedicos' %}active{% endif %}'>
+            <i class="fa-solid fa-user-doctor fa-lg icone"></i>
+            <a href="/gerenciarmedicos" class="sidebar-menu-item">Gerenciar Médicos</a>
+        </li>
+        <hr class="line" />
+          <li class='item-menu-group {% if active == 'novaconsulta' %}active{% endif %}'>
+            <i class="fa-solid fa-square-plus fa-lg icone"></i>
+            <a href="/novaconsulta" class="sidebar-menu-item">Nova Consulta</a></li>
+          <hr class="line" />
+        </ul>
+      </div>
+      <div class="logout-button-div"><a href="{% url 'logout' %}" class="logout-button">Sair</a></div>
+    </div>
+  
+    <div class="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+</body>
+</html>

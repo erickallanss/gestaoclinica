@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center" style="width: 100%">
+    <div style="">
+        <div class="card">
+            <div class="card-header" style="background-color: #28a745; color: #fff; text-align: center;">
+                <h3 class="mb-0">Cadastrar nova consulta</h3>
+            </div>
+            <div class="card-body" style="width: 60%; margin-left: auto; margin-right: auto;">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="campo_cadastro">
+                        <label for="cpf">CPF do Paciente <span class="subinfo"></span></label>
+                        <input type="text" name="cpf" id="cpf" class="form-control custom-input" placeholder="Exemplo: 12345678900" maxlength="14" oninput="formatarCPF(this)" value="{{ cpf }}">
+                        <div style='display: flex; align-items: center; justify-content: center; margin-top: 10px'; >
+                            <button type="submit" class="btn btn-novaconsulta mt-2">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                {% if paciente_encontrado %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="campo_cadastro">
+                        <label for="paciente">Nome do Paciente</label>
+                        <input type="text" name="paciente_nome" id="paciente_nome" class="form-control custom-input" value="{{ paciente_encontrado.nome }}" readonly>
+                        <!-- Adicione um campo oculto para armazenar o ID do paciente -->
+                        <input type="hidden" name="paciente" id="paciente" value="{{ paciente_encontrado.id }}">
+                    </div>
+                    <div class="campo_cadastro">
+                        <label for="cpf">CPF do Paciente <span class="subinfo"></span></label>
+                        <input type="text" name="cpf" id="cpf" class="form-control custom-input" placeholder="Exemplo: 12345678900" maxlength="14" oninput="formatarCPF(this)" value="{{ paciente_encontrado.cpf }}" readonly>
+                    </div>
+                    <div class="campo_cadastro">
+                        <label for="convenio">Convênio Médico<span class="subinfo"></span></label>
+                        <input type="text" name="convenio" id="convenio" class="form-control custom-input" placeholder="Exemplo: Unimed" value="{{ paciente_encontrado.convenio_medico }}">
+                    </div>
+                    <div class="campo_cadastro">
+                        <label for="num_carteira">Carteira do convênio<span class="subinfo"></span></label>
+                        <input type="text" name="num_carteira" id="num_carteira" class="form-control custom-input" placeholder="Exemplo: 123456" value="{{ paciente_encontrado.numero_carteira }}">
+                    </div>
+                    <div class="campo_cadastro">
+                        <label for="medico">Médico</label>
+                        <select name="medico" id="medico" class="form-control custom-input">
+                            <option selected disabled>Selecione uma das opções abaixo:</option>
+                            {% for medico in medicos %}
+                            <option value="{{ medico.id }}">{{ medico.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="campo_cadastro">
+                        <label for="data">Data da Consulta</label>
+                        <input type="date" name="data" id="data" class="form-control custom-input" value="{{ data }}" placeholder="dd/mm/yyyy">
+                    </div>
+                    <div style='display: flex; align-items: center; justify-content: center;'; >
+                        <button type="submit" class="btn btn-novaconsulta">Confirmar Consulta</button>
+                    </div>
+                </form>
+                {% else %}
+                {% if mostrar_erro %}
+                <p class="text-danger">Paciente não encontrado com o CPF inserido.</p>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .campo_cadastro {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        padding: 10px 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .subinfo {
+        font-size: 0.9rem;
+    }
+
+    input, select, option {
+        padding: 10px 10px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    .btn {
+        padding: 12px 18px;
+        width: 200px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #FFF;
+        cursor: pointer;
+        box-shadow: none;
+        border-style: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #1f8d32;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-novaconsulta {
+        padding: 12px 18px;
+        width: 200px;
+        background-color:#028214;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-novaconsulta:hover {
+        background-color: #00580c;
+    }
+
+    /* Estilo personalizado para o campo de CPF */
+    #cpf {
+        padding-right: 10px;
+    }
+</style>
+
+<script>
+    function formatarCPF(campo) {
+        campo.value = campo.value.replace(/\D/g, '');
+        if (campo.value.length > 0) {
+            campo.value = campo.value.replace(/^(\d{3})(\d)/, '$1.$2');
+            if (campo.value.length > 5) {
+                campo.value = campo.value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+                if (campo.value.length > 9) {
+                    campo.value = campo.value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+                }
+            }
+        }
+    }
+</script>
+
+{% endblock %}

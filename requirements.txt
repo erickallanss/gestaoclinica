@@ -1,0 +1,7 @@
+asgiref==3.7.2
+Django==4.2.5
+fontawesomefree==6.4.2
+gunicorn==21.2.0
+packaging==23.1
+python-dotenv==1.0.0
+sqlparse==0.4.4

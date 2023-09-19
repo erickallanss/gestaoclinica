@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Nova Conta - Seu App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgba(3, 149, 25, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-container {
+            background-color: #ffffff;
+            border-top-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 5%;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Added shadow */
+            width: 30%;
+            margin-right: 15%; /* Adjusted margin */
+            transition: transform 0.2s; /* Added hover transition */
+        }
+        .register-title-container {
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+        .register-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #039519;
+            margin-bottom: 10px;
+            margin-left: 15%; /* Adjusted margin */
+            text-align: center;
+        }
+        .register-subtitle {
+            font-size: 16px;
+            color: #000;
+        }
+        .btn-primary {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #039519; /* Matching button color */
+            border-color: #039519; /* Matching button border color */
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #028214; /* Darker color on hover */
+            border-color: #028214; /* Darker border color on hover */
+        }
+        .form-control::placeholder {
+            color: #666; /* Placeholder text color */
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(3, 149, 25, 0.25); /* Highlight on focus */
+        }
+    </style>
+</head>
+<body>
+    <div class="register-title">
+        <h1>Clínica Potengi</h1>
+        <p class="register-subtitle">Sistema de gerenciamento de pacientes, prontuários e consultas.</p>
+    </div>
+    <div class="register-container">
+        <h2 class="register-title-container">Registre uma nova conta</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Nome de Usuário</label>
+                <input type="text" class="form-control" id="username" name="username" required
+                       placeholder="Seu nome de usuário">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required
+                       placeholder="exemplo@email.com">
+            </div>
+            <div class="mb-3">
+                <label for="password1" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="password1" name="password1" required
+                       placeholder="********">
+            </div>
+            <div class="mb-3">
+                <label for="password2" class="form-label">Confirmar Senha</label>
+                <input type="password" class="form-control" id="password2" name="password2" required
+                       placeholder="********">
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+    <div class="modal fade" id="registerErrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Por favor, tente novamente.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="registerErrorMessages">
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("Script is running!");  // Adicione esta linha
+            // Verifica se há mensagens de erro no modal
+            if (document.getElementById("registerErrorMessages").childElementCount > 0) {
+                // Abre o modal automaticamente
+                var registerErrorModal = new bootstrap.Modal(document.getElementById("registerErrorModal"));
+                registerErrorModal.show();
+            }
+        });
+    </script>
+</body>
+</html>

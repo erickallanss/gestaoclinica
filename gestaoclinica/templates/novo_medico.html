@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="width: 100%;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #28a745; color: #fff; text-align: center;">
+                    <h3 class="mb-0">Cadastrar novo médico</h3>
+                </div>
+                <div class="card-body" style="width: 80%; margin-left: auto; margin-right: auto;">
+                    <form method="post" action="{% url 'novo_medico' %}">
+                        {% csrf_token %}
+                        <div class="campo_cadastro">
+                            <label for="nome">Nome <span class="subinfo">(Obrigatório)</span></label>
+                            <input type="text" name="nome" id="nome" class="form-control custom-input" placeholder="Exemplo: Dr. João da Silva" required>
+                        </div>
+                        <div class="campo_cadastro">
+                            <label for="crm">CRM <span class="subinfo">(Obrigatório, e apenas números)</span></label>
+                            <input type="text" name="crm" id="crm" class="form-control custom-input" placeholder="Exemplo: 12345" required maxlength="20">
+                            {% if mostrar_erro %}
+                            <p class="text-danger">Médico com o CRM inserido já está cadastrado no sistema.</p>
+                            {% endif %}
+                        </div>
+                        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                            <button type="submit" class="btn-cadastrar">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .campo_cadastro {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        padding: 10px 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .subinfo {
+        font-size: 0.9rem;
+    }
+
+    input {
+        padding: 10px 10px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    .btn-cadastrar {
+        padding: 12px 18px;
+        width: 200px;
+        background-color: #028214;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #FFF;
+        cursor: pointer;
+        box-shadow: none;
+        border-style: none;
+    }
+
+    .btn-cadastrar:hover {
+        background-color: #00580c;
+    }
+
+    .text-danger {
+        color: #F00;
+    }
+    
+</style>
+{% endblock %}

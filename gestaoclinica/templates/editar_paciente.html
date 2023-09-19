@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="width: 100%;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #28a745; color: #fff; text-align: center;">
+                    <h3 class="mb-0">Editar Paciente</h3>
+                </div>
+                <div class="card-body" style="width: 80%; margin-left: auto; margin-right: auto;">
+                    <form method="post" action="{% url 'editar_paciente' paciente.id %}">
+                        {% csrf_token %}
+                        <div class="campo_cadastro">
+                            <label for="nome">Nome <span class="subinfo">(Obrigatório)</span></label>
+                            <input type="text" name="nome" id="nome" class="form-control custom-input" placeholder="Exemplo: João da Silva" value="{{ paciente.nome }}" required>
+                        </div>
+                        <div class="campo_cadastro" style="flex: 1; margin-right: 10px;">
+                            <label for="numero_telefone">Telefone <span class="subinfo">(Apenas números)</span></label>
+                            <input type="tel" name="numero_telefone" id="numero_telefone" class="form-control custom-input" placeholder="Exemplo: 84999999999" maxlength="15" oninput="formatarTelefone(this)" value="{{ paciente.numero_telefone }}">
+                        </div>
+                        <div class="campo_cadastro_2">
+                            <div class="campo_cadastro" style="flex: 1; margin-right: 10px;">
+                                <label for="data_nascimento">Data de Nascimento <span class="subinfo">(Obrigatório)</span></label>
+                                <input type="text" name="data_nascimento" id="data_nascimento" class="form-control custom-input" placeholder="Exemplo: 01/12/1980" value="{{ paciente.data_nascimento|date:'d/m/Y' }}" required oninput="formatarData(this)">
+                            </div>
+
+                            <div class="campo_cadastro" style="flex: 1; margin-right: 10px;">
+                                <label for="cpf">CPF <span class="subinfo">(Obrigatório, e apenas números)</span></label>
+                                <input type="text" name="cpf" id="cpf" class="form-control custom-input" placeholder="Exemplo: 12345678900" value="{{ paciente.cpf }}" required maxlength="14" oninput="formatarCPF(this)">
+                            </div>
+
+                            <div class="campo_cadastro" style="flex: 2;">
+                                <label for="endereco">Endereço</label>
+                                <input type="text" name="endereco" id="endereco" class="form-control custom-input" placeholder="Exemplo: Rua das Flores, 123" value="{{ paciente.endereco }}">
+                            </div>
+                        </div>
+                        <div class="campo_cadastro">
+                            <label for="convenio_medico">Convênio Médico</label>
+                            <input type="text" name="convenio_medico" id="convenio_medico" class="form-control custom-input" placeholder="Exemplo: Unimed" value="{{ paciente.convenio_medico }}">
+                        </div>
+                        <div class="campo_cadastro">
+                            <label for="numero_carteira">Número da Carteira</label>
+                            <input type="text" name="numero_carteira" id="numero_carteira" class="form-control custom-input" placeholder="Exemplo: 987654321" value="{{ paciente.numero_carteira }}">
+                        </div>
+                        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                            <button type="submit" class="btn-editar" onclick="return confirm('Confirmar as alterações no paciente {{ paciente.nome }}?')">Salvar Alterações</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .campo_cadastro {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .campo_cadastro_2 {
+        display: flex;
+        flex-direction: row;
+    }
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        padding: 10px 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .subinfo {
+        font-size: 0.9rem;
+    }
+
+    input {
+        padding: 10px 10px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    .btn-editar {
+        padding: 12px 18px;
+        width: 200px;
+        background-color: #696969;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #FFF;
+        cursor: pointer;
+        box-shadow: none;
+        border-style: none;
+    }
+
+    .btn-editar:hover {
+        background-color: #494949;
+    }
+
+    /* Estilo personalizado para o campo de CPF */
+    #cpf {
+        padding-right: 10px;
+    }
+</style>
+
+<script>
+    function formatarData(campo) {
+        campo.value = campo.value.replace(/\D/g, '');
+        if (campo.value.length > 2) {
+            campo.value = campo.value.substring(0, 2) + '/' + campo.value.substring(2);
+        }
+        if (campo.value.length > 5) {
+            campo.value = campo.value.substring(0, 5) + '/' + campo.value.substring(5, 9);
+        }
+        if (campo.value.length > 10) {
+            campo.value = campo.value.substring(0, 10);
+        }
+    }
+
+    function formatarCPF(campo) {
+        campo.value = campo.value.replace(/\D/g, '');
+        if (campo.value.length > 0) {
+            campo.value = campo.value.replace(/^(\d{3})(\d)/, '$1.$2');
+            if (campo.value.length > 5) {
+                campo.value = campo.value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+                if (campo.value.length > 9) {
+                    campo.value = campo.value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+                }
+            }
+        }
+    }
+
+    function formatarTelefone(campo) {
+        campo.value = campo.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    
+        if (campo.value.length > 0) {
+            if (campo.value.length <= 2) {
+                campo.value = '(' + campo.value;
+            } else if (campo.value.length <= 6) {
+                campo.value = '(' + campo.value.substring(0, 2) + ') ' + campo.value.substring(2);
+            } else if (campo.value.length <= 11) {
+                campo.value = '(' + campo.value.substring(0, 2) + ') ' + campo.value.substring(2, 7) + '-' + campo.value.substring(7);
+            } else {
+                // Se o número for maior que 11 dígitos, não formate mais
+                campo.value = '(' + campo.value.substring(0, 2) + ') ' + campo.value.substring(2, 7) + '-' + campo.value.substring(7, 12);
+            }
+        }
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center" style="width: 100%">
+    <div style="">
+        <div class="card">
+            <div class="card-header" style="background-color: #28a745; color: #fff; text-align: center;">
+                <h3 class="mb-0" style="">Prontuário do Paciente</h3>
+            </div>
+            <div class="card-body" style="width: 60%; margin-left: auto; margin-right: auto; padding-bottom: 60px">
+                    <div class="paciente-info" style="">
+                        <h3>Informações do Paciente</h3>
+                        <p><strong>Nome:</strong> {{ paciente.nome }}</p>
+                        <p><strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}</p>
+                        <p><strong>Idade:</strong> {{ idade }} anos</p>
+                    </div>
+                    <div class="consultas" style="margin-top: 40px" >
+                        <h3>Consultas</h3>
+                        {% if consultas %}
+                            <ul>
+                                {% for consulta in consultas %}
+                                    <li>
+                                        <p><strong>Médico: </strong> {{ consulta.medico.nome }}</p>
+                                        <p><strong>Data da Consulta:</strong> {{ consulta.data }}</p>
+                                        <p><strong>Descrição:</strong></p>
+                                        <p>{{ consulta.descricao }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Nenhuma consulta registrada para este paciente.</p>
+                        {% endif %}
+                    </div>
+                    <div class="btn btn-fechar mt-3" style="margin-left: auto; margin-right: auto;">
+                        <a onclick="goBack()">Fechar Prontuário</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        padding: 10px 20px;
+    }
+
+    .paciente-info p {
+        margin: 5px auto;
+    }
+
+    .consultas ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .consultas li {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .consultas p {
+        margin: 5px 0;
+        text-align: start
+    }
+
+    .btn, .btn a {
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #FFF;
+        cursor: pointer;
+        text-decoration: none;
+        width: 240px;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .btn-fechar {
+        background-color: #DD0000;
+    }
+
+    .btn-fechar:hover {
+        background-color: #8f0000;
+    }
+
+</style>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

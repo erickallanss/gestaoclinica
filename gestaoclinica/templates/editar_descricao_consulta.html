@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="width: 100%;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #28a745; color: #fff; text-align: center;">
+                    <h3 class="mb-0">Editar Descrição da Consulta</h3>
+                </div>
+                <div class="card-body" style="width: 80%; margin-left: auto; margin-right: auto;">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="campo_cadastro">
+                            <label for="descricao">Descrição da Consulta</label>
+                            <textarea name="descricao" id="descricao" class="form-control custom-input" rows="4">{{ consulta.descricao }}</textarea>
+                        </div>
+                        <div style='display: flex; align-items: center; justify-content: center;'; >
+                            <button type="submit" class="btn-editar" onclick="return confirm('Confirmar as alterações na descrição da consulta de {{ consulta.paciente.nome }}?')">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .campo_cadastro {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        padding: 10px 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    textarea {
+        padding: 10px;
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    .btn-editar {
+        padding: 12px 18px;
+        width: 200px;
+        background-color: #696969;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #FFF;
+        cursor: pointer;
+        box-shadow: none;
+        border-style: none;
+    }
+
+    .btn-editar:hover {
+        background-color: #494949;
+    }
+</style>
+
+{% endblock %}
