@@ -4,8 +4,8 @@
     <title>Sistema de Consultas</title>
     <style>
       :root {
-        --main-bg-color: #255c99;
-        --sec-bg-color: #7ea3cc;
+        --main-bg-color: #4f5d75;
+        --sec-bg-color: #2d3142;
       }
 
         body {
@@ -89,7 +89,7 @@
           font-weight: bold;
           cursor: pointer;
           transition: background-color 0.3s ease;
-          width: 100%;
+          width: 90%;
           text-align: center;
         }
     
@@ -110,12 +110,6 @@
           opacity: 0.2;
           border: none;
           height: 1px;
-        }
-    
-        .logout-button-div {
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
     
         .subtitle {
@@ -163,8 +157,8 @@
         <span class="username">Olá, {{ username }}</span>
       </div>
       <div class="sidebar-header">
-        <div class="title">Clínica Potengi</div>
-        <div class="subtitle">Módulo de gerenciamento</div>
+        <div class="title">Clínica Médica</div>
+        <div class="subtitle">Gestão de consultas</div>
       </div>
       <div>
         <ul class="sidebar-menu">
@@ -193,7 +187,7 @@
           <hr class="line" />
         </ul>
       </div>
-      <div class="logout-button-div"><a href="{% url 'logout' %}" class="logout-button">Sair</a></div>
+      <div class="logout-button"><i class="fa-solid fa-right-from-bracket fa-lg icone"></i><a href="{% url 'logout' %}" class="logout-button">Sair</a></div>
     </div>
   
     <div class="content">
