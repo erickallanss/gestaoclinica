@@ -5,14 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Nova Conta - Seu App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --main-bg-color: #4f5d75;
+            --sec-bg-color: #2d3142;
+            --terc-bg-color: #bfc0c0;
+            --main-text-color: #4f5d75;
+            --sec-text-color: #000;
+        }
         body {
-            background-color: rgba(3, 149, 25, 0.3);
+            background-color: var(--main-bg-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 100vh;
             margin: 0;
+            font-family: 'Montserrat', sans-serif;
         }
         .register-container {
             background-color: #ffffff;
@@ -27,31 +38,41 @@
         .register-title-container {
             margin-bottom: 20px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.6rem;
+            color: var(--main-bg-color);
         }
         .register-title {
             font-size: 24px;
             font-weight: bold;
-            color: #039519;
+            color: #fff;
             margin-bottom: 10px;
             margin-left: 15%; /* Adjusted margin */
             text-align: center;
         }
+        .title {
+            font-weight: 700;
+            margin-top: 30px;
+        }
         .register-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #fff;
+        }
+        .textinfo {
             font-size: 16px;
-            color: #000;
+            color: #fff;
         }
         .btn-primary {
             margin-top: 20px;
             width: 100%;
-            background-color: #039519; /* Matching button color */
-            border-color: #039519; /* Matching button border color */
+            background-color: var(--main-bg-color); /* Matching button color */
+            border-color: var(--main-bg-color);  /* Matching button border color */
             transition: background-color 0.3s, border-color 0.3s;
         }
         .btn-primary:hover {
-            background-color: #028214; /* Darker color on hover */
-            border-color: #028214; /* Darker border color on hover */
+            background-color: var(--sec-bg-color); /* Matching button color */
+            border-color: var(--sec-bg-color);  /* Darker border color on hover */
         }
         .form-control::placeholder {
             color: #666; /* Placeholder text color */
@@ -59,12 +80,21 @@
         .form-control:focus {
             box-shadow: 0 0 0 0.2rem rgba(3, 149, 25, 0.25); /* Highlight on focus */
         }
+        .image_logo {
+            filter: invert(100%);
+            width: 30%;
+        }
+        .image_logo img {
+            background-color: #FFF;
+        }
     </style>
 </head>
 <body>
     <div class="register-title">
-        <h1>Clínica Potengi</h1>
-        <p class="register-subtitle">Sistema de gerenciamento de pacientes, prontuários e consultas.</p>
+        {% load static %}
+        <img src="{% static 'img/doctors.png' %}" class="image_logo" alt="Logo da Clínica">
+        <h1 class="title">Clínica Médica</h1>
+        <p class="register-subtitle">Módulo de gerenciamento de consultas</p>
     </div>
     <div class="register-container">
         <h2 class="register-title-container">Registre uma nova conta</h2>
@@ -92,6 +122,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
+        <p class="textinfo" style="margin-top: 10px; text-align: center; color: #000;">Já tem uma conta? <a href="{% url 'login' %}">Entre na sua conta</a></p>
     </div>
     <div class="modal fade" id="registerErrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog">

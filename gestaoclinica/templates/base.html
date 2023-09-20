@@ -8,6 +8,10 @@
         --sec-bg-color: #2d3142;
       }
 
+      * {
+        font-family: 'Montserrat', sans-serif;
+      }
+
         body {
           background-color: #FFF;
           font-family: Arial, sans-serif;
@@ -139,7 +143,15 @@
 
         .icone {
           margin-left: 30px;
-          
+        }
+        .image_logo {
+          filter: invert(100%);
+          width: 25%;
+          margin-top: 30px;
+          margin-bottom: 10px;
+        }
+        .image_logo img {
+          background-color: #FFF;
         }
 
       </style>
@@ -148,6 +160,9 @@
       <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
       <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
       <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
     {% load static %}
@@ -157,6 +172,7 @@
         <span class="username">Olá, {{ username }}</span>
       </div>
       <div class="sidebar-header">
+        <img src="{% static 'img/doctors.png' %}" class="image_logo" alt="Logo da Clínica">
         <div class="title">Clínica Médica</div>
         <div class="subtitle">Gestão de consultas</div>
       </div>
@@ -187,7 +203,9 @@
           <hr class="line" />
         </ul>
       </div>
-      <div class="logout-button"><i class="fa-solid fa-right-from-bracket fa-lg icone"></i><a href="{% url 'logout' %}" class="logout-button">Sair</a></div>
+      <div class="logout-button">
+        <i class="fa-solid fa-right-from-bracket fa-lg icone-sair"></i>
+        <a href="{% url 'logout' %}" class="logout-button">Sair</a></div>
     </div>
   
     <div class="content">

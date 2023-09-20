@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Clínica Potengi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-bg-color: #4f5d75;
             --sec-bg-color: #2d3142;
             --terc-bg-color: #bfc0c0;
             --main-text-color: #4f5d75;
-            -sec-text-color: #000;
-          }
-          
+            --sec-text-color: #000;
+        }  
         body {
             background-color: var(--main-bg-color);
             display: flex;
@@ -21,9 +23,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-        }
-        .title {
-            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
         }
         .login-container {
             background-color: #ffffff;
@@ -38,19 +38,28 @@
         .login-title-container {
             margin-bottom: 20px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.6rem;
+            color: var(--main-bg-color);
+        }
+        .title {
+            font-weight: 700;
+            margin-top: 30px;
         }
         .login-title {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
             color: #fff;
             margin-bottom: 10px;
+            margin-left: 15%; /* Adjusted margin */
             text-align: center;
-            width: 50%;
         }
-
         .login-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #fff;
+        }
+        .textinfo {
             font-size: 16px;
             color: #fff;
         }
@@ -73,7 +82,7 @@
         }
         .image_logo {
             filter: invert(100%);
-            width: 20%;
+            width: 30%;
         }
         .image_logo img {
             background-color: #FFF;
@@ -86,7 +95,7 @@
         {% load static %}
         <img src="{% static 'img/doctors.png' %}" class="image_logo" alt="Logo da Clínica">
         <h1 class="title">Clínica Médica</h1>
-        <p class="login-subtitle">Módulo de gerenciamento de consultas.</p>
+        <p class="login-subtitle">Módulo de gerenciamento de consultas</p>
     </div>
     <div class="login-container">
         <h2 class="login-title-container">Acesse o sistema</h2>
@@ -95,7 +104,7 @@
             <div class="mb-3">
                 <label for="username_or_email" class="form-label">Usuário ou Email</label>
                 <input type="text" class="form-control" id="username_or_email" name="username_or_email" required
-                       placeholder="Usuário ou Email">
+                       placeholder="Usuário">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Senha</label>
@@ -108,7 +117,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
-        <p class="login-subtitle" style="margin-top: 10px; text-align: center; color: #000;">Ainda não tem uma conta? <a href="{% url 'register' %}">Crie uma conta</a></p>
+        <p class="textinfo" style="margin-top: 10px; text-align: center; color: #000;">Ainda não tem uma conta? <a href="{% url 'register' %}">Crie uma conta</a></p>
         <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
