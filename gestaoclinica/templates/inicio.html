@@ -24,6 +24,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-bottom: 60px;
     }
 
     .divheader {
@@ -75,43 +76,55 @@
         width: 98%;
         min-height: 60%;
     }
-
+    .listaconsultas:first-child {
+        flex: 2;
+    }
     .listaconsultas {
         background-color: #FFF;
-        flex: 1;
+        flex: 3;
         border-radius: 10px;
-        margin-bottom: 20px;
         margin-top: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
+        padding: 0px 20px;
     }
 
     .listaconsultas:first-child {
         margin-right: 20px;
     }
 
-    .list-group-item:first-child {
-        margin-bottom: 30px;
-        background-color: var(--sec-bg-color);
+    .patients-lists-header {
+        background-color: var(--sec-bg-color)!important;
         color: #FFF;
     }
 
     .list-group-item {
-        padding: 10px;
+        padding: 20px;
         border: none;
         border-radius: 10px;
         margin-bottom: 10px;
         background-color: var(--ter-bg-color);
     }
 
-    .btn-primary {
-        background-color: #028214;
+    .list-group-item:last-child {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        text-decoration: none;
         color: #fff;
         border: none;
-        border-radius: 4px;
-        padding: 8px 16px;
+        border-radius: 6px;
+        padding: 10px;
         cursor: pointer;
         transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-primary {
+        background-color: #028214;
     }
 
     .btn-primary:hover {
@@ -120,12 +133,6 @@
 
     .btn-danger {
         background-color: #DD0000;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
     }
 
     .btn-danger:hover {
@@ -133,15 +140,7 @@
     }
 
     .btn-abrirprontuario {
-        text-decoration: none;
         background-color: #73847B;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        font-size: 0.8rem;
     }
 
     .btn-abrirprontuario:hover {
@@ -149,15 +148,7 @@
     }
 
     .btn-preencherprontuario {
-        text-decoration: none;
         background-color: #039519;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 8px 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        font-size: 0.8rem;
     }
 
     .btn-preencherprontuario:hover {
@@ -169,16 +160,29 @@
     }
 
     .botoesdaconsulta {
-        margin-top: 10px;
         display: flex;
-        flex: 1;
         gap: 5px;
-    
-        @media(max-width: 1024px) {
-            flex-direction: column;
-            flex: 1;
-            margin-top: 5px;
-        }
+        flex-direction: row;
+    }
+
+    .consulta-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    }
+
+    .consulta-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .consulta-info-confirmed {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
     }
 
 </style>
@@ -197,19 +201,19 @@
     </div>
     <div class="listasconsultas">
         <div class="listaconsultas">
-            <h3 class="list-group-item text-center">Pacientes agendados</h3>
+            <h3 class="list-group-item text-center patients-lists-header">Pacientes agendados</h3>
             {% if appointments %}
             <ul class="list-group mt-3">
                 {% for appointment in appointments %}
                     {% if not appointment.compareceu %}
                     <li class="list-group-item consulta-item">
                         <div class="consulta-info">
-                            <p style="margin-bottom: 5px"><strong>Paciente: </strong> {{ appointment.paciente.nome }}</p>
-                            <p><strong>Médico: </strong> {{ appointment.medico.nome }}</p>
+                            <strong>Paciente: </strong> {{ appointment.paciente.nome }}
+                            <strong style="margin-top: 5px;">Médico: </strong> {{ appointment.medico.nome }}
                         </div>
-                        <form method="POST" action="{% url 'marcar_compareceu' appointment.id %}">
+                        <form method="POST" action="{% url 'marcar_compareceu' appointment.id %}" class="botoesdaconsulta">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary" style="margin-top: 10px">Confirmar consulta</button>
+                            <button type="submit" class="btn btn-primary">Confirmar consulta</button>
                         </form>
                     </li>
                     {% endif %}
@@ -222,17 +226,17 @@
             {% endif %}
         </div>
         <div class="listaconsultas">
-            <h3 class="list-group-item text-center">Pacientes confirmados</h3>
+            <h3 class="list-group-item text-center patients-lists-header">Pacientes confirmados</h3>
             {% if pacientes_compareceram %}
             <ul class="list-group mt-3">
                 {% for consulta in pacientes_compareceram %}
-                    <li class="list-group-item consulta-item consulta-info">
-                        <p><strong>{{ consulta.ordem_comparecimento }}</strong> - {{ consulta.paciente.nome }}</p>
+                    <li class="list-group-item consulta-item consulta-info-confirmed">
+                        <p><strong>{{ consulta.ordem_comparecimento }}</strong>. {{ consulta.paciente.nome }}</p>
                         <form method="POST" action="{% url 'marcar_compareceu' consulta.id %}" class="botoesdaconsulta">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger" style="flex: 1;">Cancelar confirmação</button>
-                            <a href="{% url 'prontuario_paciente' consulta.paciente.id %}" class="btn btn-abrirprontuario" style="flex: 1;">Ver prontuário</a>
-                            <a href="{% url 'editar_descricao_consulta' consulta.id %}" class="btn btn-preencherprontuario" style="flex: 1;">Preencher prontuário</a>
+                            <button href="{% url 'prontuario_paciente' consulta.paciente.id %}" class="btn btn-abrirprontuario" style="flex: 1;">Ver prontuário</button>
+                            <button href="{% url 'editar_descricao_consulta' consulta.id %}" class="btn btn-preencherprontuario" style="flex: 1;">Preencher prontuário</button>
                         </form>
                     </li>
                 {% empty %}
