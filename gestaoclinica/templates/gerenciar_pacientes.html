@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="tablepacientes" style="width: 95%">
+<div class="tablepacientes" style="width: 100%">
     <div class="row">
         <div class="col-md-9">
-            <h2 style="text-align: center;">Gerenciar Pacientes</h2>
-            <div class="divfiltro"><strong>Filtro dinâmico:</strong>
-                <input type="text" id="filtro-pacientes" class="form-control filtro"
-                    placeholder="Insira aqui algum dado a ser filtrado" />
+            <div class="upper-panel">
+                <div class="header-title">
+                    <h2 style="text-align: center;">Gerenciar Pacientes</h2>
+                </div>
+                <div class="filter-div">
+                    <div class="addpaciente btn btn-novopaciente">
+                        <a class="buttonaddpacient" href="{% url 'novo_paciente' %}">
+                            Registrar novo paciente
+                        </a>
+                    </div>
+                    <input type="text" id="filtro-pacientes" class="form-control filtro"
+                        placeholder="Insira aqui algum dado a ser filtrado" />
+                </div>
             </div>
-            <center>
-            <div class="addpaciente btn btn-novopaciente"><a class="linkbutton" href="{% url 'novo_paciente' %}">Registrar novo paciente</a></div>
-            </center>
-            <div class="table-responsive">
+
+            <div class="table-content">
                 <table class="table table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -26,14 +33,17 @@
                     <tbody>
                         {% for paciente in pacientes %}
                         <tr>
-                            <td>{{ paciente.nome }}</td>
+                            <td><a href="">{{ paciente.nome }}</a></td>
                             <td>{{ paciente.data_nascimento|date:"d/m/Y" }}</td>
                             <td>{{ paciente.cpf }}</td>
                             <td>{{ paciente.numero_telefone }}</td>
                             <td>
-                                <a href="{% url 'prontuario_paciente' paciente.id %}" class="btn btn-prontuario btn-sm">Prontuário</a>
-                                <a href="{% url 'editar_paciente' paciente.id %}" class="btn btn-editar btn-sm">Editar</a>
-                                <a class="btn btn-excluir btn-sm" href="{% url 'excluir_paciente' paciente.id %}" onclick="return confirm('Tem certeza de que deseja excluir o paciente {{ paciente.nome }}?')">Excluir</a>
+                                <a href="{% url 'prontuario_paciente' paciente.id %}"
+                                    class="btn btn-prontuario btn-sm">Prontuário</a>
+                                <a href="{% url 'editar_paciente' paciente.id %}"
+                                    class="btn btn-editar btn-sm">Editar</a>
+                                <a class="btn btn-excluir btn-sm" href="{% url 'excluir_paciente' paciente.id %}"
+                                    onclick="return confirm('Tem certeza de que deseja excluir o paciente {{ paciente.nome }}?')">Excluir</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -44,35 +54,80 @@
     </div>
 </div>
 <style>
-    .divfiltro {
+    .upper-panel {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .header-title {
+        background-color: #FFF;
+        color: #000;
+        width: calc(98% - 40px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .filter-div {        
+        background-color: #FFF;
+        color: #000;
+        width: calc(98% - 40px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
         margin-bottom: 20px;
-        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        gap: 10px;
     }
 
     .table {
         width: 100%;
         max-width: 100%;
         margin-bottom: 1rem;
-        background-color: transparent;
     }
 
-    .table th,
+    .table-content {
+        background-color: #FFF;
+        color: #000;
+        width: calc(98% - 40px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        gap: 10px;
+    }
+
     .table td {
-        padding: 0.75rem;
-        vertical-align: top;
-        border-top: 1px solid #dee2e6;
+        padding: 0.5rem;
+        vertical-align: center;
+        margin: 0;
     }
 
     .table thead th {
         vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
-    }
-
-    .table tbody+tbody {
-        border-top: 2px solid #dee2e6;
+        background-color: var(--main-bg-color);
+        border-radius: 10px;
+        color: #FFF;
+        padding: 1rem;
     }
 
     .table-sm th,
@@ -80,26 +135,21 @@
         padding: 0.3rem;
     }
 
-    .table-bordered {
-        border: 1px solid #dee2e6;
-    }
-
-    .table-bordered th,
-    .table-bordered td {
-        border: 1px solid #dee2e6;
-    }
-
     .table-bordered thead th,
     .table-bordered thead td {
         border-bottom-width: 2px;
     }
 
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(0, 0, 0, 0.05);
+    tbody tr {
+        background-color: var(--ter-bg-color);
     }
 
     .table-hover tbody tr:hover {
-        background-color: rgba(0, 0, 0, 0.075);
+        background-color: #4f5d75ae;
+    }
+
+    td {
+        border-radius: 10px;
     }
 
     .filtro {
@@ -121,49 +171,47 @@
         text-decoration: none;
         display: inline-block;
     }
-    
+
     .btn-prontuario {
-        background-color:#028214;
+        background-color: var(--main-bg-color);
     }
 
     .btn-prontuario:hover {
-        background-color:#00580c;
+        background-color: var(--sec-bg-color);
     }
 
     .btn-editar {
-        background-color:#696969;
+        background-color: #a3a3a3;
+        color: #2c2c2c;
     }
 
     .btn-editar:hover {
-        background-color:#494949;
+        background-color: #767676;
+        color: #FFF;
     }
 
     .btn-excluir {
-        background-color:#DD0000;
+        background-color: #bd0909;
     }
 
     .btn-excluir:hover {
-        background-color:#8f0000;
-    }
-
-    .addpaciente {
-        margin-bottom: 20px;
+        background-color: #8f0000;
     }
 
     .btn-novopaciente {
         padding: 12px 18px;
         width: 200px;
-        background-color:#028214;
+        background-color: var(--main-bg-color);
         text-align: center;
         margin-left: auto;
         margin-right: auto;
     }
 
     .btn-novopaciente:hover {
-        background-color: #00580c;
+        background-color: var(--sec-bg-color);
     }
 
-    .linkbutton {
+    .buttonaddpacient {
         text-decoration: none;
         color: #FFF;
     }
