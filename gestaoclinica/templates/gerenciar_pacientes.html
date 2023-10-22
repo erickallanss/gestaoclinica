@@ -6,16 +6,15 @@
         <div class="col-md-9">
             <div class="upper-panel">
                 <div class="header-title">
-                    <h2 style="text-align: center;">Gerenciar Pacientes</h2>
+                    <h2>Gerenciar Pacientes ({{pacientes.count}})</h2>
                 </div>
                 <div class="filter-div">
-                    <div class="addpaciente btn btn-novopaciente">
+                    <div class="btn btn-add">
                         <a class="buttonaddpacient" href="{% url 'novo_paciente' %}">
-                            Registrar novo paciente
+                            Registrar <br /> novo paciente
                         </a>
                     </div>
-                    <input type="text" id="filtro-pacientes" class="form-control filtro"
-                        placeholder="Insira aqui algum dado a ser filtrado" />
+                    <input type="text" id="filtro-pacientes" class="form-control filtro" placeholder="Insira aqui algum dado a ser filtrado" />
                 </div>
             </div>
 
@@ -54,113 +53,6 @@
     </div>
 </div>
 <style>
-    .upper-panel {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .header-title {
-        background-color: #FFF;
-        color: #000;
-        width: calc(98% - 40px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 15px;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .filter-div {        
-        background-color: #FFF;
-        color: #000;
-        width: calc(98% - 40px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        gap: 10px;
-    }
-
-    .table {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    .table-content {
-        background-color: #FFF;
-        color: #000;
-        width: calc(98% - 40px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        gap: 10px;
-    }
-
-    .table td {
-        padding: 0.5rem;
-        vertical-align: center;
-        margin: 0;
-    }
-
-    .table thead th {
-        vertical-align: bottom;
-        background-color: var(--main-bg-color);
-        border-radius: 10px;
-        color: #FFF;
-        padding: 1rem;
-    }
-
-    .table-sm th,
-    .table-sm td {
-        padding: 0.3rem;
-    }
-
-    .table-bordered thead th,
-    .table-bordered thead td {
-        border-bottom-width: 2px;
-    }
-
-    tbody tr {
-        background-color: var(--ter-bg-color);
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: #4f5d75ae;
-    }
-
-    td {
-        border-radius: 10px;
-    }
-
-    .filtro {
-        width: 100%;
-        height: 30px;
-        border: 2px solid rgba(0, 0, 0, 0.2);
-        padding: 5px 10px;
-        font-size: 0.9rem;
-        border-radius: 5px;
-        margin-left: 10px;
-    }
 
     .btn {
         padding: 10px 12px;
@@ -181,12 +73,12 @@
     }
 
     .btn-editar {
-        background-color: #a3a3a3;
-        color: #2c2c2c;
+        background-color: #757575;
+        color: #FFF;
     }
 
     .btn-editar:hover {
-        background-color: #767676;
+        background-color: #4c4c4c;
         color: #FFF;
     }
 
@@ -196,24 +88,6 @@
 
     .btn-excluir:hover {
         background-color: #8f0000;
-    }
-
-    .btn-novopaciente {
-        padding: 12px 18px;
-        width: 200px;
-        background-color: var(--main-bg-color);
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .btn-novopaciente:hover {
-        background-color: var(--sec-bg-color);
-    }
-
-    .buttonaddpacient {
-        text-decoration: none;
-        color: #FFF;
     }
 
 </style>
