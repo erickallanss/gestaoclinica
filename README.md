@@ -1,6 +1,6 @@
 # Projeto de Gestão Clínica
 
-Este é um projeto desenvolvido para lidar com gestão de clínicas médicas, com login de usuário, para o controle do gerenciamento de clínicas que lidam com agendamento de consultas médicas. O dashboard inicial mostra do lado esquerdo a lista de pacientes agendados para o dia atual, e do lado direito, a lista de pacientes realmente confirmados (que compareceram no dia e estão aguardando serem chamados). O sistema ainda conta com módulos de gerenciar médicos, pacientes e consultas.
+Este é um projeto desenvolvido para lidar com gestão de clínicas médicas, com login de usuário, para o controle do gerenciamento de clínicas que lidam com agendamento de consultas médicas. O dashboard inicial mostra do lado esquerdo a lista de pacientes agendados para o dia atual, e do lado direito, a lista de pacientes realmente confirmados (que compareceram no dia e estão aguardando serem chamados). O sistema ainda conta com módulos de gerenciar médicos, pacientes e consultas. O projeto foi feito em Python, utilizando Django.
 
 <br />
 <br />
